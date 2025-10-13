@@ -29,7 +29,17 @@ response = client.models.generate_content(
         In every row, read the column 'Problem Statement' and evaluate the contents of 'Solution Hypothesis' column based on knowledge that
         - Team members : 5 college students
         - Duration : 6-week hackathon, 3 hours per week per person
-        Rate every solution on a scale of 1-5, 1 being lowest, 5 highest.
+        The rubrics are: "Timely", "Importance", "Profitable", "Solvable", "Contextual"
+        Rate every solution on every rubric on a scale of 1-5, 1 being lowest, 5 highest.
+        Return your answer STRICTLY as a valid CSV with the same rows and columns:
+        Name, Problem Statement, Solution Hypothesis, Timely, Importance, Profitable, Solvable, Contextual
+        Create a new column estimating the input tokens, output tokens and total tokens used as well.
         '''
     ]
 )
+csv_output = response.candidates[0].content.parts[0].text
+
+output_path = "./dummySolutionGradesRated.csv"
+with open(output_path, "w") as f:
+    f.write(csv_output)
+
